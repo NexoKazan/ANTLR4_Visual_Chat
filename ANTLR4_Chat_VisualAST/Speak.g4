@@ -2508,12 +2508,12 @@ THE SOFTWARE.
 
 //lexer grammar MySqlLexer;
 
-//channels {MYSQLCOMMENT, ERRORCHANNEL}
+//channels {MYSQLCOMMENT, ERRORCHANNEL} //Каналы не поддерживаются в комбинированных словарях.
 
 // SKIP
 
 SPACE:                               [ \t\r\n]+    -> channel(HIDDEN);
-SPEC_MYSQL_COMMENT:                  '/*!' .+? '*/' -> channel(MYSQLCOMMENT);
+SPEC_MYSQL_COMMENT:                  '/*!' .+? '*/' -> channel(HIDDEN); //MYSQLCOMMENT->HIDDEN, чтобы при создании класа не было подканала.
 COMMENT_INPUT:                       '/*' .*? '*/' -> channel(HIDDEN);
 LINE_COMMENT:                        (
                                        ('-- ' | '#') ~[\r\n]* ('\r'? '\n' | EOF) 
@@ -3648,4 +3648,4 @@ fragment BIT_STRING_L:               'B' '\'' [01]+ '\'';
 
 // Last tokens must generate Errors
 
-ERROR_RECONGNIGION:                  .    -> channel(ERRORCHANNEL);
+ERROR_RECONGNIGION:                  .    -> channel(HIDDEN); //ERRORCHANNEL->HIDDEN также как и с коментами
