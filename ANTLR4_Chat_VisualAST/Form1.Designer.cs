@@ -46,7 +46,7 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(215, 212);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Chad : \"Hello\"\r\nMike : \"Hi\"\r\n";
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // button1
             // 
