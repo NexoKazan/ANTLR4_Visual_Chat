@@ -97,14 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>ANTLR4_Chat_VisualAST</CustomToolNamespace>
     </Antlr4>
-    <Antlr4 Include="Utility\MySqlLexer.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>ANTLR4_Chat_VisualAST.Utility</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="Utility\MySqlParser.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>ANTLR4_Chat_VisualAST.Utility</CustomToolNamespace>
-    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

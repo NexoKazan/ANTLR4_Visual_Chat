@@ -28,7 +28,7 @@ namespace ANTLR4_Chat_VisualAST
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
             SpeakParser speakParser = new SpeakParser(commonTokenStream);
             speakParser.BuildParseTree = true;
-            IParseTree tree = speakParser.root();
+            IParseTree tree = speakParser.chat();
             textBox1.Text = tree.ToStringTree();
             var treeNodeDrawable = new ASTTreeNode(tree);
             if (pictureBox1.Image != null)

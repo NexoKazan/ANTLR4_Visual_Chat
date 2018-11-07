@@ -38,15 +38,8 @@ namespace EntMapping.Utility
                 var sizeText = g.MeasureString(text, font);
                 g.DrawString(text, font, Brushes.Black, Math.Max(0, (size.Width - sizeText.Width) / 2), Math.Max(0, (size.Height - sizeText.Height) / 2));
             }
-            if (text != "Node")
-            {
-                return img;
-            }
-            else
-            {
-                Bitmap empty = new Bitmap(1,1);
-                return empty;
-            }
+            return img;
+           
         }
 
         private static Pen ConnectionPen
@@ -84,7 +77,7 @@ namespace EntMapping.Utility
 
         private Image Draw(IASTTreeNode astTreeNode, out int center)
         {
-            var nodeText = astTreeNode.Text;
+            var nodeText = astTreeNode.TextDef;
             var nodeSize = TextMeasurer.MeasureString("*" + nodeText + "*", NodeTextFont);
             nodeSize.Width = Math.Max(MinimumNodeSize.Width, nodeSize.Width);
             nodeSize.Height = Math.Max(MinimumNodeSize.Height, nodeSize.Height);
