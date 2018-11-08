@@ -60,12 +60,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Speak.g4.lexer.cs">
+    <None Include="Speak.g4.lexer.cs">
       <DependentUpon>Speak.g4</DependentUpon>
-    </Compile>
-    <Compile Include="Speak.g4.parser.cs">
+    </None>
+    <None Include="Speak.g4.parser.cs">
       <DependentUpon>Speak.g4</DependentUpon>
-    </Compile>
+    </None>
+    <Compile Include="SpeakBaseListener.cs" />
+    <Compile Include="SpeakLexer.cs" />
+    <Compile Include="SpeakListener.cs" />
+    <Compile Include="SpeakParser.cs" />
     <Compile Include="Utility\ASTTreeNode.cs" />
     <Compile Include="Utility\IASTTreeNode.cs" />
     <Compile Include="Utility\TextMeasurer.cs" />
@@ -92,10 +96,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Antlr4 Include="Speak.g4">
+    <None Include="Speak.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>ANTLR4_Chat_VisualAST</CustomToolNamespace>
-    </Antlr4>
+      <Listener>True</Listener>
+      <Visitor>True</Visitor>
+      <TargetLanguage>CSHARP</TargetLanguage>
+    </None>
+    <None Include="Speak.interp" />
+    <AntlrTokens Include="Speak.tokens">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>ANTLR4_Chat_VisualAST</CustomToolNamespace>
+    </AntlrTokens>
+    <None Include="SpeakLexer.interp" />
+    <AntlrTokens Include="SpeakLexer.tokens">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>ANTLR4_Chat_VisualAST</CustomToolNamespace>
+    </AntlrTokens>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

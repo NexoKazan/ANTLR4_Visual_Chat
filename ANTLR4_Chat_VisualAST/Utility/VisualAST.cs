@@ -77,7 +77,7 @@ namespace EntMapping.Utility
 
         private Image Draw(IASTTreeNode astTreeNode, out int center)
         {
-            var nodeText = astTreeNode.TextDef;
+            var nodeText = astTreeNode.Text;
             var nodeSize = TextMeasurer.MeasureString("*" + nodeText + "*", NodeTextFont);
             nodeSize.Width = Math.Max(MinimumNodeSize.Width, nodeSize.Width);
             nodeSize.Height = Math.Max(MinimumNodeSize.Height, nodeSize.Height);
@@ -86,7 +86,7 @@ namespace EntMapping.Utility
             var childImages = new Image[astTreeNode.Count];
             var childSizes = new Size[astTreeNode.Count];
 
-            var enumerator = astTreeNode.Children.GetEnumerator(); ;
+            var enumerator = astTreeNode.Children.GetEnumerator();
             int i = 0;
             while (enumerator.MoveNext())
             {

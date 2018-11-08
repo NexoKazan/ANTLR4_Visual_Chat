@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Antlr4.Runtime.Tree;
+using Antlr4.Runtime;
 using System.Windows.Forms;
 
 
@@ -12,12 +13,16 @@ namespace EntMapping.Utility
 {
     public class ASTTreeNode : IASTTreeNode
     {
-        ITree _tree;
         
-
-        public ASTTreeNode(ITree tree)
+        IParseTree _tree;
+        SpeakParser _parser;
+        IToken _tokens;
+        string _node;
+        public ASTTreeNode(IParseTree tree, SpeakParser parser, string node)
         {
             _tree = tree;
+            _parser = parser;
+            _node += node;
         }
 
         public string Text
@@ -25,7 +30,9 @@ namespace EntMapping.Utility
            get {
                 if (_tree.ChildCount != 0)
                 {
-                    return "Node";
+
+                    _node = _tree.ToStringTree(_parser);
+                    return _node;
                 }
                 else
                 {
@@ -36,8 +43,9 @@ namespace EntMapping.Utility
         public string TextDef
         {
             get
-            {  return _tree.ToString();
-            
+            {
+                return _tree.ToString();
+
             }
         }
 
@@ -51,8 +59,8 @@ namespace EntMapping.Utility
             get
             {
                 for (int i = 0; i < _tree.ChildCount; ++i)
-                {
-                    yield return new ASTTreeNode(_tree.GetChild(i));
+                {                    
+                    yield return new ASTTreeNode(_tree.GetChild(i), _parser, _node);
                 }
             }
         }
