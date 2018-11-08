@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Antlr4.Runtime.Tree;
+using Antlr4.Runtime;
 using System.Windows.Forms;
 
 
@@ -12,10 +13,10 @@ namespace EntMapping.Utility
 {
     public class ASTTreeNode : IASTTreeNode
     {
-        ITree _tree;
-        
+        IParseTree _tree;
+        Speak
 
-        public ASTTreeNode(ITree tree)
+        public ASTTreeNode(IParseTree tree)
         {
             _tree = tree;
         }
