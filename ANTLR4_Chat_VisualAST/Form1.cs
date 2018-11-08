@@ -11,6 +11,7 @@ using Antlr4.Runtime.Tree;
 using System.Windows.Forms;
 using EntMapping.Utility;
 
+
 namespace ANTLR4_Chat_VisualAST
 {
     public partial class Form1 : Form
@@ -28,6 +29,7 @@ namespace ANTLR4_Chat_VisualAST
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
             SpeakParser speakParser = new SpeakParser(commonTokenStream);
             speakParser.BuildParseTree = true;
+            
             IParseTree tree = speakParser.chat();
             textBox1.Text = tree.ToStringTree();
             var treeNodeDrawable = new ASTTreeNode(tree);
