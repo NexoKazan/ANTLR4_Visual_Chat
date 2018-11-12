@@ -9,7 +9,7 @@ namespace EntMapping.Utility
     public interface IASTTreeNode
     {
         string Text { get; }
-        string TextDef { get; }
+        string TextDef { get; }        
         int Count { get; }
         IEnumerable<IASTTreeNode> Children { get; }
     }

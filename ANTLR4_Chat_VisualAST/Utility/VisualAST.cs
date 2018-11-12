@@ -11,16 +11,15 @@ namespace EntMapping.Utility
     {
         private static Font NodeTextFont = new Font("Verdana", 8f);
         private static SizeF MinimumNodeSize = new SizeF(32, 28);
-        private static Size NodeGapping = new Size(4, 32);
-        private static Dictionary<string, Pen> Pens = new Dictionary<string, Pen>();
-
+        private static Size NodeGapping = new Size(4, 32);        private static Dictionary<string, Pen> Pens = new Dictionary<string, Pen>(); 
         public IASTTreeNode ASTTreeNode { get; private set; }
-
+        public int _num;
+        public int _single;
+        public int _mynode;    
         public VisualAST(IASTTreeNode astTreeNode)
         {
-            ASTTreeNode = astTreeNode;
+            ASTTreeNode = astTreeNode;            
         }
-
         private static Bitmap CreateNodeImage(Size size, string text, Font font)
         {
             Bitmap img = new Bitmap(size.Width, size.Height);
@@ -38,15 +37,16 @@ namespace EntMapping.Utility
                 var sizeText = g.MeasureString(text, font);
                 g.DrawString(text, font, Brushes.Black, Math.Max(0, (size.Width - sizeText.Width) / 2), Math.Max(0, (size.Height - sizeText.Height) / 2));
             }
-            if (text != "Node")
-            {
+            //if (text != "Node") //Костыль для свёриывания дерева
+            //{
+            //    return img;
+            //}
+            //else
+            //{
+            //    Bitmap empty = new Bitmap(1,1);
+            //    return empty;
+            //}                              
                 return img;
-            }
-            else
-            {
-                Bitmap empty = new Bitmap(1,1);
-                return empty;
-            }
         }
 
         private static Pen ConnectionPen
@@ -78,13 +78,22 @@ namespace EntMapping.Utility
         public Image Draw()
         {
             int center;
-            Image image = Draw(this.ASTTreeNode, out center);
+            Image image = Draw(this.ASTTreeNode, out center, 0, 0);
             return image;
         }
 
-        private Image Draw(IASTTreeNode astTreeNode, out int center)
+        private Image Draw(IASTTreeNode astTreeNode, out int center, int num, int single)
         {
-            var nodeText = astTreeNode.Text;
+            _num = num + 1;
+            switch (astTreeNode.Count)
+            {
+                case 0: _mynode = single+1; _single = 0; break;
+                case 1: _single = _single = single +1; break;
+                default: _single = 0; break;
+            }
+            //var nodeText = _num.ToString() + " " + _single.ToString() + " " + _mynode.ToString();
+            //var nodeText = astTreeNode.Text + _num.ToString() ;
+            var nodeText = _num.ToString();
             var nodeSize = TextMeasurer.MeasureString("*" + nodeText + "*", NodeTextFont);
             nodeSize.Width = Math.Max(MinimumNodeSize.Width, nodeSize.Width);
             nodeSize.Height = Math.Max(MinimumNodeSize.Height, nodeSize.Height);
@@ -94,17 +103,17 @@ namespace EntMapping.Utility
             var childSizes = new Size[astTreeNode.Count];
 
             var enumerator = astTreeNode.Children.GetEnumerator(); ;
-            int i = 0;
+            int i = 0;             
             while (enumerator.MoveNext())
             {
                 var currentNode = enumerator.Current;
-                var lCenter = 0;
-                childImages[i] = Draw(currentNode, out lCenter);
+                var lCenter = 0;               
+                childImages[i] = Draw(currentNode, out lCenter, _num, _single);
                 childCentres[i] = lCenter;
                 if (childImages[i] != null)
                 {
                     childSizes[i] = childImages[i] != null ? childImages[i].Size : new Size();
-                }
+                }               
                 ++i;
             }
 
@@ -159,7 +168,7 @@ namespace EntMapping.Utility
 
                 childImages[j].Dispose(); // Release child image as it aleady drawn on parent node's surface 
             }
-
+           
             g.Dispose();
 
             return result;

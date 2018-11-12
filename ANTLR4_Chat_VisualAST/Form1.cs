@@ -15,6 +15,7 @@ namespace ANTLR4_Chat_VisualAST
 {
     public partial class Form1 : Form
     {
+        string output;
         public Form1()
         {
             InitializeComponent();
@@ -27,17 +28,22 @@ namespace ANTLR4_Chat_VisualAST
             ITokenSource speakLexer = new SpeakLexer(inputStream);
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
             SpeakParser speakParser = new SpeakParser(commonTokenStream);
+            ParserRuleContext context = new ParserRuleContext();                         
             speakParser.BuildParseTree = true;
             IParseTree tree = speakParser.root();
-            textBox1.Text = tree.ToStringTree();
+            context = speakParser.root();    
+            
             var treeNodeDrawable = new ASTTreeNode(tree);
             if (pictureBox1.Image != null)
             {
                 pictureBox1.Image.Dispose();
                 pictureBox1.Image = null;
-            }
-            Image image = new VisualAST(treeNodeDrawable).Draw();
+            }           
+            
+            VisualAST vTree = new VisualAST(treeNodeDrawable);
+            Image image = vTree.Draw();            
             pictureBox1.Image = image;
+            textBox1.Text = output;
         }
     }
 }
