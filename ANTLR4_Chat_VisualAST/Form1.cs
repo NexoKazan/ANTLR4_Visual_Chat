@@ -31,8 +31,12 @@ namespace ANTLR4_Chat_VisualAST
             ParserRuleContext context = new ParserRuleContext();                         
             speakParser.BuildParseTree = true;
             IParseTree tree = speakParser.root();
-            context = speakParser.root();    
-            
+            context = speakParser.root();
+            IList<IToken> tokens = commonTokenStream.GetTokens();
+            foreach(IToken token in tokens)
+            {
+                output +='"' + token.Text + '"';
+            }
             var treeNodeDrawable = new ASTTreeNode(tree);
             if (pictureBox1.Image != null)
             {
