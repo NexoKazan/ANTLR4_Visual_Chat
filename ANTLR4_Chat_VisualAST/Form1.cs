@@ -32,9 +32,9 @@ namespace ANTLR4_Chat_VisualAST
             speakParser.BuildParseTree = true;
             ParserRuleContext context = speakParser.chat();
             output = context.ToString(speakParser.RuleNames);
-            IParseTree tree = speakParser.chat();
+            ITree tree = speakParser.chat();
             
-            var treeNodeDrawable = new ASTTreeNode(tree, speakParser, "1Node");
+            var treeNodeDrawable = new ASTTreeNode(tree);
             if (pictureBox1.Image != null)
             {
                 pictureBox1.Image.Dispose();
@@ -42,7 +42,7 @@ namespace ANTLR4_Chat_VisualAST
             }
             Image image = new VisualAST(treeNodeDrawable).Draw();
             pictureBox1.Image = image;
-            textBox1.Text = output;
+            textBox1.Text = tree.ToStringTree();
         }
     }
 }

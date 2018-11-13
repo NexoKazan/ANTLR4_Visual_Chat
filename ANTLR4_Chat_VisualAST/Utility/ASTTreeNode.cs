@@ -14,15 +14,12 @@ namespace EntMapping.Utility
     public class ASTTreeNode : IASTTreeNode
     {
         
-        IParseTree _tree;
-        SpeakParser _parser;
-        IToken _tokens;
+        ITree _tree;
+       
         string _node;
-        public ASTTreeNode(IParseTree tree, SpeakParser parser, string node)
+        public ASTTreeNode(ITree tree)
         {
             _tree = tree;
-            _parser = parser;
-            _node += node;
         }
 
         public string Text
@@ -31,7 +28,7 @@ namespace EntMapping.Utility
                 if (_tree.ChildCount != 0)
                 {
 
-                    _node = _tree.ToStringTree(_parser);
+                    _node = "Branch";
                     return _node;
                 }
                 else
@@ -60,7 +57,7 @@ namespace EntMapping.Utility
             {
                 for (int i = 0; i < _tree.ChildCount; ++i)
                 {                    
-                    yield return new ASTTreeNode(_tree.GetChild(i), _parser, _node);
+                    yield return new ASTTreeNode(_tree.GetChild(i));
                 }
             }
         }

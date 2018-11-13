@@ -36,7 +36,7 @@ public partial class SpeakParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		SAYS=1, WORD=2, TEXT=3, WHITESPACE=4, NEWLINE=5, WS=6;
+		SAYS=1, WORD=2, TEXT=3, WHITESPACE=4, NEWLINE=5;
 	public const int
 		RULE_chat = 0, RULE_line = 1, RULE_name = 2, RULE_opinion = 3, RULE_compileUnit = 4;
 	public static readonly string[] ruleNames = {
@@ -44,10 +44,9 @@ public partial class SpeakParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, null, null, null, null, null, "' '"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "SAYS", "WORD", "TEXT", "WHITESPACE", "NEWLINE", "WS"
+		null, "SAYS", "WORD", "TEXT", "WHITESPACE", "NEWLINE"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -101,6 +100,11 @@ public partial class SpeakParser : Parser {
 			ISpeakListener typedListener = listener as ISpeakListener;
 			if (typedListener != null) typedListener.ExitChat(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISpeakVisitor<TResult> typedVisitor = visitor as ISpeakVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitChat(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -148,6 +152,11 @@ public partial class SpeakParser : Parser {
 			ISpeakListener typedListener = listener as ISpeakListener;
 			if (typedListener != null) typedListener.ExitLine(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISpeakVisitor<TResult> typedVisitor = visitor as ISpeakVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLine(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -189,6 +198,11 @@ public partial class SpeakParser : Parser {
 			ISpeakListener typedListener = listener as ISpeakListener;
 			if (typedListener != null) typedListener.ExitName(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISpeakVisitor<TResult> typedVisitor = visitor as ISpeakVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitName(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -226,6 +240,11 @@ public partial class SpeakParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ISpeakListener typedListener = listener as ISpeakListener;
 			if (typedListener != null) typedListener.ExitOpinion(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISpeakVisitor<TResult> typedVisitor = visitor as ISpeakVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitOpinion(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -265,6 +284,11 @@ public partial class SpeakParser : Parser {
 			ISpeakListener typedListener = listener as ISpeakListener;
 			if (typedListener != null) typedListener.ExitCompileUnit(this);
 		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISpeakVisitor<TResult> typedVisitor = visitor as ISpeakVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCompileUnit(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -290,7 +314,7 @@ public partial class SpeakParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\b', '\x1C', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\a', '\x1C', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', '\x3', '\x2', 
 		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', 
