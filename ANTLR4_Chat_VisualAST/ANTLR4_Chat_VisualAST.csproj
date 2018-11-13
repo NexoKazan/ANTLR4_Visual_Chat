@@ -71,6 +71,7 @@
     <Compile Include="Utility\IASTTreeNode.cs" />
     <Compile Include="Utility\TextMeasurer.cs" />
     <Compile Include="Utility\VisualAST.cs" />
+    <Compile Include="Visitor.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
