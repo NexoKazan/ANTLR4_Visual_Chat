@@ -36,7 +36,7 @@ namespace EntMapping.Utility
                 }
                 else
                 {
-                    return _tree.ToString();
+                    return _tree.Payload.ToString();
                 }                  
             }
         }

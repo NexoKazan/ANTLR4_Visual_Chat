@@ -23,12 +23,15 @@ namespace ANTLR4_Chat_VisualAST
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string output;
             string inputString = textBox1.Text;
             ICharStream inputStream = new AntlrInputStream(inputString.ToString());
             ITokenSource speakLexer = new SpeakLexer(inputStream);
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
             SpeakParser speakParser = new SpeakParser(commonTokenStream);            
             speakParser.BuildParseTree = true;
+            ParserRuleContext context = speakParser.chat();
+            output = context.ToString(speakParser.RuleNames);
             IParseTree tree = speakParser.chat();
             
             var treeNodeDrawable = new ASTTreeNode(tree, speakParser, "1Node");
@@ -39,6 +42,7 @@ namespace ANTLR4_Chat_VisualAST
             }
             Image image = new VisualAST(treeNodeDrawable).Draw();
             pictureBox1.Image = image;
+            textBox1.Text = output;
         }
     }
 }
