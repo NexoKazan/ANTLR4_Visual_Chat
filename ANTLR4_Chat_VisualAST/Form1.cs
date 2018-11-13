@@ -38,6 +38,7 @@ namespace ANTLR4_Chat_VisualAST
                 //output +='"' + token.Text + '"';
                 //output += "\n";
             }
+            
             var treeNodeDrawable = new ASTTreeNode(tree);
             if (pictureBox1.Image != null)
             {
@@ -46,8 +47,12 @@ namespace ANTLR4_Chat_VisualAST
             }           
             
             VisualAST vTree = new VisualAST(treeNodeDrawable);
-            Image image = vTree.Draw();            
-            pictureBox1.Image = image;
+            Image image = vTree.Draw();
+            foreach (string tableName in vTree.GetTables)
+            {
+                output += tableName + "\r\n" ;
+            }
+                pictureBox1.Image = image;
             textBox1.Text = output;
         }
     }

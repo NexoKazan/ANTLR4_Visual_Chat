@@ -13,9 +13,11 @@ namespace EntMapping.Utility
         private static SizeF MinimumNodeSize = new SizeF(32, 28);
         private static Size NodeGapping = new Size(4, 32);        private static Dictionary<string, Pen> Pens = new Dictionary<string, Pen>(); 
         public IASTTreeNode ASTTreeNode { get; private set; }
+        public List<string> Tables = new List<string>();
         public int _num;
         public int _single;
-        public int _mynode;    
+        public int _mynode;
+        bool pointer = false;   
         public VisualAST(IASTTreeNode astTreeNode)
         {
             ASTTreeNode = astTreeNode;            
@@ -49,6 +51,13 @@ namespace EntMapping.Utility
                 return img;
         }
 
+        public List<string> GetTables
+        {
+            get
+            {
+                return Tables;
+            }
+        }
         private static Pen ConnectionPen
         {
             get
@@ -84,6 +93,15 @@ namespace EntMapping.Utility
 
         private Image Draw(IASTTreeNode astTreeNode, out int center, int num, int single)
         {
+            if (astTreeNode.Text == "TableNameContext")
+            {
+                pointer = true;
+            }
+            if (astTreeNode.Count == 0 && pointer)
+            {
+                Tables.Add(astTreeNode.Text.ToString());
+                pointer = false;
+            }
             _num = num + 1;
             switch (astTreeNode.Count)
             {
@@ -91,9 +109,9 @@ namespace EntMapping.Utility
                 case 1: _single = _single = single +1; break;
                 default: _single = 0; break;
             }
-            //var nodeText = _num.ToString() + " " + _single.ToString() + " " + _mynode.ToString();
+            var nodeText = _num.ToString() + " " + _single.ToString() + " " + _mynode.ToString()+ astTreeNode.Text;
             //var nodeText = astTreeNode.Text + _num.ToString() ;
-            var nodeText = _num.ToString();
+           // var nodeText = _num.ToString();
             var nodeSize = TextMeasurer.MeasureString("*" + nodeText + "*", NodeTextFont);
             nodeSize.Width = Math.Max(MinimumNodeSize.Width, nodeSize.Width);
             nodeSize.Height = Math.Max(MinimumNodeSize.Height, nodeSize.Height);
